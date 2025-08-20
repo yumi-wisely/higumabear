@@ -34,291 +34,351 @@
     .fade-in.visible { opacity: 1; transform: none; }
   </style>
 </head>
-<body class="antialiased">
+<body class="bg-primary text-primary">
 
-  <header class="bg-white/80 backdrop-blur sticky top-0 z-50 border-b">
-    <nav class="container mx-auto px-6 py-3 flex items-center justify-between">
-      <a href="../" class="text-sm text-gray-600 hover:text-accent">← インデックスに戻る</a>
-      <ul class="hidden md:flex items-center gap-6 text-sm">
-        <li><a class="nav-link" data-target="intro">はじめに</a></li>
-        <li><a class="nav-link" data-target="science">科学的基盤</a></li>
-        <li><a class="nav-link" data-target="paradox">フェルミのパラドックス</a></li>
-        <li><a class="nav-link" data-target="psy">歴史と心理</a></li>
-        <li><a class="nav-link" data-target="search">現代の探査</a></li>
-        <li><a class="nav-link" data-target="end">結論</a></li>
-      </ul>
-      <select id="mobile-nav" class="md:hidden bg-white border border-gray-300 rounded-md p-1 text-sm">
-        <option value="#intro">はじめに</option>
-        <option value="#science">科学的基盤</option>
-        <option value="#paradox">フェルミのパラドックス</option>
-        <option value="#psy">歴史と心理</option>
-        <option value="#search">現代の探査</option>
-        <option value="#end">結論</option>
-      </select>
-    </nav>
-  </header>
+    <header class="sticky top-0 z-50 bg-primary/80 backdrop-blur-md shadow-sm">
+        <nav class="container mx-auto px-6 py-3">
+        <a href="../" class="text-sm text-gray-600 hover:text-accent">← インデックスに戻る</a>
+            <ul class="flex justify-center space-x-4 md:space-x-8 text-sm md:text-base font-medium">
+                <li><a class="nav-link" data-target="introduction">序論</a></li>
+                <li><a class="nav-link" data-target="science">科学的基盤</a></li>
+                <li><a class="nav-link" data-target="paradox">フェルミのパラドックス</a></li>
+                <li><a class="nav-link" data-target="psychology">歴史と心理</a></li>
+                <li><a class="nav-link" data-target="search">現代の探査</a></li>
+                <li><a class="nav-link" data-target="conclusion">結論</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <main class="container mx-auto px-6 py-10 md:py-14">
+    <main class="container mx-auto px-6 py-8 md:py-12">
 
-    <!-- Intro -->
-    <section id="intro" class="min-h-[56vh] grid place-items-center text-center fade-in">
-      <div>
-        <h1 class="text-4xl md:text-6xl font-bold leading-tight">
-          宇宙人は、<span class="text-accent">もうここにいる</span>？
-        </h1>
-        <p class="text-lg md:text-xl max-w-3xl mx-auto mt-6 text-gray-600">
-          「宇宙人が人間と同じ姿で共存している可能性」を、
-          科学・歴史・心理・現代の探査という複数のレンズで検討するインタラクティブ・レポート。
-        </p>
-      </div>
-    </section>
+        <section id="introduction" class="text-center min-h-[60vh] flex flex-col justify-center items-center fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">彼らは、すでにここにいるのか？</h1>
+            <p class="text-lg md:text-xl text-secondary max-w-3xl">「宇宙人が地球に上陸し、人間と同じ姿で共存している可能性」という問いを、科学、歴史、心理学の視点から多角的に探るインタラクティブ・レポート。</p>
+        </section>
 
-    <!-- Science -->
-    <section id="science" class="py-14 border-t border-amber-200 fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第1章：科学的基盤</h2>
-      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">
-        生命の普遍性と、人間型に「収斂」する必然はあるのか？宇宙生物学と進化生物学の観点から概観します。
-      </p>
-
-      <div class="grid md:grid-cols-2 gap-8 items-stretch">
-        <div class="bg-panel rounded-2xl p-8">
-          <h3 class="text-2xl font-bold mb-4 text-center">宇宙のスケール</h3>
-          <p class="text-center text-sm text-gray-600 mb-6">広大さは可能性を示唆する——数字で体感。</p>
-          <div class="grid grid-cols-1 gap-6 text-center">
-            <div>
-              <p class="text-4xl font-bold" data-counter-target="2000000000000">0</p>
-              <p class="text-gray-600">観測可能な宇宙の銀河の数</p>
+        <section id="science" class="py-12 md:py-20 border-t border-accent fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第1章: 科学的基盤</h2>
+            <p class="text-center text-secondary mb-12 max-w-3xl mx-auto">このセクションでは、宇宙における生命の存在確率と、地球外生命体が「人間型」である可能性を、宇宙生物学と進化生物学の観点から探ります。広大な宇宙のスケールと、生命進化の根本的な問いに触れてみましょう。</p>
+            
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="bg-secondary p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold mb-4 text-center">宇宙のスケール</h3>
+                    <p class="text-center text-secondary mb-6">生命が存在する可能性は、宇宙の圧倒的な広大さから示唆されます。</p>
+                    <div class="space-y-4 text-center">
+                        <div>
+                            <p class="text-4xl font-bold text-primary" data-counter-target="2000000000000">0</p>
+                            <p class="text-secondary">観測可能な宇宙の銀河の数</p>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-bold text-primary" data-counter-target="40000000000">0</p>
+                            <p class="text-secondary">天の川銀河内の生命居住可能惑星 (推定)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-2xl font-bold mb-4">人間型宇宙人の可能性は？</h3>
+                    <p class="text-secondary mb-6">もし知的生命体が存在するなら、その姿は人間に似るのでしょうか？進化生物学には、対立する二つの主要な考え方があります。</p>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="card border-2 border-accent p-6 rounded-lg">
+                            <h4 class="font-bold text-lg mb-2">収斂進化 (必然性)</h4>
+                            <p class="text-sm text-secondary">異なる種でも、似た環境に適応する過程で、似た形態に進化するという考え方。二足歩行や腕を持つ「人間型」は、知的生命体にとって効率的な基本設計であり、宇宙のどこでも必然的に現れる可能性があります。</p>
+                        </div>
+                        <div class="card border-2 border-accent p-6 rounded-lg">
+                            <h4 class="font-bold text-lg mb-2">進化の偶然性</h4>
+                            <p class="text-sm text-secondary">進化は、大量絶滅などの偶然の出来事に大きく左右されるため、再現性は低いという考え方。人類は奇跡的な偶然の産物であり、他の惑星で全く同じ形態が生まれる可能性は極めて低いとされます。</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-              <p class="text-4xl font-bold" data-counter-target="40000000000">0</p>
-              <p class="text-gray-600">天の川の生命居住可能惑星（推定）</p>
+        </section>
+
+        <section id="paradox" class="py-12 md:py-20 border-t border-accent fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第2章: フェルミのパラドックス</h2>
+            <p class="text-center text-secondary mb-12 max-w-3xl mx-auto">宇宙に生命が存在する可能性が高いのに、なぜ私たちは彼らと接触した証拠を全く見つけられないのでしょうか？この「大いなる沈黙」の謎を解くための、様々な仮説を探ってみましょう。カードをクリックして詳細をご覧ください。</p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="hypotheses-grid">
             </div>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-2xl p-8 border border-amber-100">
-          <h3 class="text-2xl font-bold mb-4 text-center">人間型は必然？偶然？</h3>
-          <div class="grid gap-4">
-            <div class="card border-2 border-amber-200 rounded-xl p-6">
-              <h4 class="font-bold mb-2">収斂進化（必然）</h4>
-              <p class="text-gray-600 text-sm">
-                似た環境は似た解を選びがち。二足歩行＋把持腕は「知性の器」として合理的で、宇宙でも再現されうるという立場。
-              </p>
+             <div id="hypothesis-details" class="mt-8 p-6 bg-secondary rounded-lg transition-all duration-500" style="display: none;">
             </div>
-            <div class="card border-2 border-amber-200 rounded-xl p-6">
-              <h4 class="font-bold mb-2">進化の偶然性</h4>
-              <p class="text-gray-600 text-sm">
-                大量絶滅などの偶然に大きく左右されるため、人類の形態は特異点。人間型の再現可能性は低いという立場。
-              </p>
+        </section>
+
+        <section id="psychology" class="py-12 md:py-20 border-t border-accent fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第3章: 歴史と心理</h2>
+            <p class="text-center text-secondary mb-12 max-w-3xl mx-auto">UFOや宇宙人との遭遇談は、どのように生まれ、なぜ人々を惹きつけるのでしょうか。このセクションでは、有名なUFO事件と、陰謀論を信じてしまう人間の心理的メカニズムを解き明かします。</p>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-center">主要なUFO事件と伝説</h3>
+                    <div class="space-y-6">
+                        <div class="card bg-secondary p-6 rounded-lg">
+                            <h4 class="font-bold text-lg">ロズウェル事件 (1947年)</h4>
+                            <p class="text-sm text-secondary mt-2">UFOの墜落と異星人の遺体が回収されたという主張で有名。しかし、主張の多くは事件から数十年後に出てきたもので、目撃者間で矛盾が多く、公式調査では証拠は見つかっていません。</p>
+                        </div>
+                        <div class="card bg-secondary p-6 rounded-lg">
+                            <h4 class="font-bold text-lg">メン・イン・ブラック伝説の起源 (1947年)</h4>
+                            <p class="text-sm text-secondary mt-2">モーリー島事件でUFOを目撃した人物が「黒いスーツの男」に口止めされたと主張したことが起源。政府による情報隠蔽という陰謀論を加速させました。</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-center">なぜ人は陰謀論を信じるのか？</h3>
+                    <div class="space-y-6">
+                        <div class="card border-2 border-accent p-6 rounded-lg">
+                            <h4 class="font-bold text-lg">独自性欲求</h4>
+                            <p class="text-sm text-secondary mt-2">「自分だけが知る特別な情報」として陰謀論に惹かれ、自分が特別な存在だと感じたいという心理。</p>
+                        </div>
+                        <div class="card border-2 border-accent p-6 rounded-lg">
+                            <h4 class="font-bold text-lg">確証バイアス</h4>
+                            <p class="text-sm text-secondary mt-2">自分の信じたい情報を無意識に集め、反対の情報を無視してしまう傾向。SNSはこのバイアスを強化します。</p>
+                        </div>
+                         <div class="card border-2 border-accent p-6 rounded-lg">
+                            <h4 class="font-bold text-lg">エコーチェンバー現象</h4>
+                            <p class="text-sm text-secondary mt-2">閉鎖的なコミュニティ内で同じ意見が繰り返され、増幅されることで、誤った情報が真実であるかのように信じ込まれてしまう現象。</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- Fermi Paradox -->
-    <section id="paradox" class="py-14 border-t border-amber-200 fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第2章：フェルミのパラドックス</h2>
-      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">
-        ありそうなのに、なぜ出会えない？代表的な仮説をカードで探索。
-      </p>
+        <section id="search" class="py-12 md:py-20 border-t border-accent fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第4章: 現代の探査</h2>
+            <p class="text-center text-secondary mb-12 max-w-3xl mx-auto">憶測や陰謀論から離れ、現代の科学はどのように地球外生命を探しているのでしょうか。市民科学から大規模プロジェクトへと進化したSETI（地球外知的生命体探査）の最前線を見てみましょう。</p>
+            
+            <div class="bg-secondary p-8 rounded-lg">
+                <h3 class="text-2xl font-bold mb-6 text-center">SETIの進化：市民科学から大規模科学へ</h3>
+                <p class="text-center text-secondary mb-8">かつての市民参加型プロジェクト「SETI@home」から、現代の「ブレイクスルー・リッスン」へと、探査の規模と技術は飛躍的に進化しました。以下のグラフは、その投資額の差を示しています。</p>
+                <div class="chart-container">
+                    <canvas id="setiChart"></canvas>
+                </div>
+                 <p class="text-center text-sm text-secondary mt-8">ブレイクスルー・リッスンは、AIや機械学習を駆使して膨大なデータを解析していますが、未だ決定的な信号は発見されていません。これは、探査の困難さと、我々が探している「生命」の定義が人間中心的すぎる可能性を示唆しています。</p>
+            </div>
+        </section>
 
-      <div id="hypotheses-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-      <div id="hypothesis-details" class="mt-8 p-6 bg-panel rounded-xl hidden"></div>
-    </section>
+        <section id="conclusion" class="py-12 md:py-20 border-t border-accent fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">結論: 私たち自身を映す鏡</h2>
+            <p class="text-center text-secondary mb-12 max-w-3xl mx-auto">本レポートの分析を通じて、「宇宙人が人間として共存している」という仮説は、科学的根拠に乏しい一方で、私たちの社会や心理を深く映し出す鏡であることが明らかになりました。</p>
+            
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-secondary p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">科学的視点</h3>
+                    <p class="text-sm text-secondary">生命の存在は確率的にあり得るが、人間型である必然性はない。進化の偶然性が、その可能性を低くしている。</p>
+                </div>
+                <div class="bg-secondary p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">心理学的視点</h3>
+                    <p class="text-sm text-secondary">UFOや陰謀論は、社会不安や情報への不信感、そして人間の認知バイアスから生まれる物語である。</p>
+                </div>
+                <div class="bg-secondary p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">現代的視点</h3>
+                    <p class="text-sm text-secondary">探査技術は進歩したが、決定的な証拠はない。この問いは、未知なる他者を通じて、私たち自身を理解する旅でもある。</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <!-- History & Psychology -->
-    <section id="psy" class="py-14 border-t border-amber-200 fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第3章：歴史と心理</h2>
-      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">
-        ロズウェルからメン・イン・ブラック、そして陰謀論を信じたくなる人間の心まで。
-      </p>
+    <footer class="text-center py-8 border-t border-accent">
+        <p class="text-secondary text-sm">インタラクティブ・レポート | 宇宙人共存の可能性</p>
+    </footer>
 
-      <div class="grid md:grid-cols-2 gap-10">
-        <div class="space-y-6">
-          <div class="card bg-panel p-6 rounded-xl">
-            <h3 class="font-bold">ロズウェル事件（1947）</h3>
-            <p class="text-sm text-gray-600 mt-2">
-              異星人遺体の回収などで有名だが、主張の多くは後年登場。証言に矛盾が多く、公式調査でも決定的証拠はなし。
-            </p>
-          </div>
-          <div class="card bg-panel p-6 rounded-xl">
-            <h3 class="font-bold">メン・イン・ブラックの起源（1947）</h3>
-            <p class="text-sm text-gray-600 mt-2">
-              モーリー島事件の「黒服の男」証言が原点。政府陰謀のイメージを拡散。
-            </p>
-          </div>
-        </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            const hypothesisData = [
+                {
+                    title: 'グレート・フィルター仮説',
+                    summary: '知的生命体への進化過程に、克服困難な障壁が存在する。',
+                    details: 'この仮説は、生命が文明を築くまでのどこかの段階に、ほとんどの種が乗り越えられない「フィルター」があると提唱します。そのフィルターが核戦争や気候変動、AIの暴走といった自己破壊的な出来事である可能性があり、多くの文明は宇宙に進出する前に自滅してしまうのかもしれません。'
+                },
+                {
+                    title: '動物園仮説',
+                    summary: '高度な文明が、地球を意図的に「保護区」として扱っている。',
+                    details: 'この仮説では、地球はより高度な宇宙文明によって、未開な「動物園」や「自然保護区」のように見なされています。彼らは地球の自然な発展に干渉しないよう、意図的に接触を避けていると考えられます。SF作品の「未開惑星保護条約」に近い概念です。'
+                },
+                {
+                    title: '黒暗森林（ダークフォレスト）理論',
+                    summary: '宇宙の文明は互いを脅威とみなし、存在を隠している。',
+                    details: 'SF作家・劉慈欣が提唱したこの理論は、宇宙を「暗い森」に例えます。各文明は森をさまよう狩人であり、他の狩人（文明）は全て潜在的な脅威です。生存のための最善策は、自分の存在を隠し、発見した他の狩人を排除すること。そのため、宇宙は沈黙しているのだと説明します。'
+                },
+                {
+                    title: '技術的・物理的制約',
+                    summary: '信号が遠すぎる、微弱すぎる、あるいは認識できない。',
+                    details: '最も単純な説明の一つです。宇宙は広大であり、他の文明からの信号が地球に届くまでには何万年もかかるかもしれません。また、信号が非常に微弱で現在の我々の技術では検出できないか、あるいは我々が想像もつかないような通信方法を使っている可能性もあります。'
+                },
+                {
+                    title: '形態の認知限界',
+                    summary: '宇宙人は我々が「生命」として認識できない姿をしている。',
+                    details: '私たちは生命を炭素をベースにした地球型のものとして考えがちですが、宇宙人はケイ素生物や、物理的な体を持たないエネルギー生命体、あるいは高次元の存在である可能性も否定できません。もしそうなら、彼らがすぐそばにいても、私たちは認識すらできないでしょう。'
+                },
+                {
+                    title: '仮想世界への没入',
+                    summary: '高度文明は物理世界に関心を失い、仮想現実に引きこもっている。',
+                    details: '技術が極度に発達した文明は、物理的な宇宙探査よりも、自らが作り出した完璧な仮想世界（シミュレーション）の中で生きることを選ぶかもしれません。彼らにとって、外部の宇宙はもはや探求する価値のないものになっている可能性があります。'
+                }
+            ];
 
-        <div class="space-y-6">
-          <div class="card border-2 border-amber-200 p-6 rounded-xl">
-            <h3 class="font-bold">独自性欲求</h3>
-            <p class="text-sm text-gray-600 mt-2">「自分だけが知る特別情報」への誘惑。</p>
-          </div>
-          <div class="card border-2 border-amber-200 p-6 rounded-xl">
-            <h3 class="font-bold">確証バイアス</h3>
-            <p class="text-sm text-gray-600 mt-2">信じたい情報だけ集め、反証を無視する傾向。</p>
-          </div>
-          <div class="card border-2 border-amber-200 p-6 rounded-xl">
-            <h3 class="font-bold">エコーチェンバー</h3>
-            <p class="text-sm text-gray-600 mt-2">同質なコミュニティで誤情報が強化される現象。</p>
-          </div>
-        </div>
-      </div>
-    </section>
+            const hypothesesGrid = document.getElementById('hypotheses-grid');
+            const hypothesisDetails = document.getElementById('hypothesis-details');
 
-    <!-- Modern Search -->
-    <section id="search" class="py-14 border-t border-amber-200 fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第4章：現代の探査</h2>
-      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">
-        市民科学の SETI@home からブレイクスルー・リッスンへ。規模の違いを可視化。
-      </p>
+            hypothesisData.forEach((hypo, index) => {
+                const card = document.createElement('div');
+                card.className = 'card hypothesis-card border-2 border-accent p-6 rounded-lg cursor-pointer';
+                card.dataset.index = index;
+                card.innerHTML = `
+                    <h4 class="font-bold text-lg mb-2 pointer-events-none">${hypo.title}</h4>
+                    <p class="text-sm text-secondary pointer-events-none">${hypo.summary}</p>
+                `;
+                hypothesesGrid.appendChild(card);
+            });
+            
+            let activeCard = null;
 
-      <div class="bg-panel rounded-2xl p-8">
-        <div class="chart-container">
-          <canvas id="setiChart"></canvas>
-        </div>
-        <p class="text-center text-gray-500 text-sm mt-6">
-          ※ 対数スケール表示。金額は概算の目安。
-        </p>
-      </div>
-    </section>
+            hypothesesGrid.addEventListener('click', (e) => {
+                if (e.target.classList.contains('hypothesis-card')) {
+                    const card = e.target;
+                    const index = card.dataset.index;
+                    
+                    if (activeCard === card) {
+                        hypothesisDetails.style.display = 'none';
+                        card.classList.remove('active');
+                        activeCard = null;
+                        return;
+                    }
 
-    <!-- Conclusion -->
-    <section id="end" class="py-14 border-t border-amber-200 fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">結論：未知は、私たちの鏡</h2>
-      <p class="text-center max-w-3xl mx-auto text-gray-700">
-        科学的には人間型の必然性は弱く、決定的証拠も未発見。けれどこの問いは、社会と心理を映す鏡でした——
-        私たちは「他者」を通して自分たちを理解しているのかもしれない。
-      </p>
-    </section>
-  </main>
+                    if(activeCard) {
+                        activeCard.classList.remove('active');
+                    }
+                    
+                    card.classList.add('active');
+                    activeCard = card;
 
-  <footer class="bg-white/80 border-t">
-    <div class="container mx-auto px-6 py-6 text-center text-sm text-gray-600">
-      © <span id="year"></span> wiseresearch — Interactive Alien Report
-    </div>
-  </footer>
+                    const data = hypothesisData[index];
+                    hypothesisDetails.innerHTML = `
+                        <h4 class="font-bold text-xl mb-2">${data.title}</h4>
+                        <p class="text-secondary">${data.details}</p>
+                    `;
+                    hypothesisDetails.style.display = 'block';
+                }
+            });
 
-  <script>
-    // Footer year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Mobile nav
-    document.getElementById('mobile-nav').addEventListener('change', (e) => {
-      location.hash = e.target.value;
-    });
-
-    // Smooth nav & active link by IntersectionObserver
-    const sections = document.querySelectorAll('section');
-    const links = document.querySelectorAll('.nav-link');
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          document.querySelectorAll('.fade-in').forEach(el=>el.classList.add('visible'));
-          links.forEach(a=>a.classList.toggle('active', a.dataset.target === entry.target.id));
-        }
-      });
-    }, { root:null, threshold:0.12, rootMargin:'0px 0px -50% 0px' });
-    sections.forEach(s=>io.observe(s));
-
-    // Counter animation
-    function animateValue(el, to, dur=1800){
-      const from = 0;
-      let start = null;
-      function step(ts){
-        if(!start) start = ts;
-        const p = Math.min((ts-start)/dur, 1);
-        el.textContent = Math.floor(from + (to-from)*p).toLocaleString('ja-JP');
-        if(p<1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    }
-    const counters = document.querySelectorAll('[data-counter-target]');
-    counters.forEach(el=>{
-      const target = +el.dataset.counterTarget;
-      const obs = new IntersectionObserver((e,o)=>{
-        e.forEach(en=>{ if(en.isIntersecting){ animateValue(el, target); o.unobserve(en.target); }})
-      }, {threshold:0.6});
-      obs.observe(el);
-    });
-
-    // Hypotheses cards
-    const hypotheses = [
-      { t:'グレート・フィルター仮説', s:'文明進化のどこかに越え難い壁がある', d:'生命から高度文明までの過程に「滅びの壁」があり、多くの文明は宇宙進出前に自滅する。' },
-      { t:'動物園仮説', s:'高度文明が地球を保護区として扱う', d:'干渉しない方針で接触を避けているため、我々は観察される側にある。' },
-      { t:'ダークフォレスト理論', s:'互いを脅威と見做し沈黙する宇宙', d:'発見＝危険。各文明は身を隠し、他文明の痕跡は意図的に少ない。' },
-      { t:'技術的・物理的制約', s:'遠すぎ／弱すぎ／方式が違い検出できない', d:'光年スケールの減衰・時間遅延・未知の通信方式などで、現技術では手掛かりが希薄。' },
-      { t:'形態の認知限界', s:'「生命」と認識できない形で存在', d:'非炭素生命や非物質的存在なら、目の前でも気づけない可能性。' },
-      { t:'仮想世界への没入', s:'高度文明は現実宇宙に関心を失う', d:'完璧な仮想世界で生きる方が効用大。外界探索の動機が薄れる。' },
-    ];
-    const grid = document.getElementById('hypotheses-grid');
-    const detail = document.getElementById('hypothesis-details');
-    let active = null;
-    hypotheses.forEach((h,i)=>{
-      const card = document.createElement('button');
-      card.type = 'button';
-      card.className = 'card hypothesis-card border-2 border-amber-200 rounded-xl p-6 text-left';
-      card.dataset.i = i;
-      card.innerHTML = `<h4 class="font-bold mb-1">${h.t}</h4><p class="text-sm text-gray-600">${h.s}</p>`;
-      grid.appendChild(card);
-    });
-    grid.addEventListener('click', (e)=>{
-      const card = e.target.closest('.hypothesis-card');
-      if(!card) return;
-      if(active) active.classList.remove('active');
-      card.classList.add('active'); active = card;
-      const h = hypotheses[+card.dataset.i];
-      detail.classList.remove('hidden');
-      detail.innerHTML = `<h4 class="font-bold text-xl mb-2">${h.t}</h4><p class="text-gray-700">${h.d}</p>`;
-    });
-
-    // Chart.js: SETI scale comparison (log axis)
-    const ctx = document.getElementById('setiChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['SETI@home（年予算）', 'ブレイクスルー・リッスン（総投資）'],
-        datasets: [{
-          label: '投資額（USD）',
-          data: [500000, 100000000],
-          backgroundColor: ['rgba(217, 119, 6, .25)', 'rgba(217, 119, 6, .6)'],
-          borderColor: ['rgba(217, 119, 6, .6)', 'rgba(217, 119, 6, 1)'],
-          borderWidth: 1,
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            type: 'logarithmic',
-            beginAtZero: false,
-            ticks: {
-              callback: (v)=>{
-                if(v===1e5) return '10万';
-                if(v===1e6) return '100万';
-                if(v===1e7) return '1,000万';
-                if(v===1e8) return '1億';
-                return '';
-              }
-            },
-            title: { display: true, text: '対数スケール（USD）' }
-          }
-        },
-        plugins: {
-          legend: { display:false },
-          tooltip: {
-            callbacks: {
-              label: (ctx)=>{
-                const v = ctx.parsed.y;
-                return ` ${new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(v)}`;
-              }
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString('ja-JP');
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
             }
-          }
-        }
-      }
-    });
-  </script>
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        const counters = entry.target.querySelectorAll('[data-counter-target]');
+                        counters.forEach(counter => {
+                            const target = +counter.dataset.counterTarget;
+                            if (counter.innerHTML === '0') { 
+                                animateValue(counter, 0, target, 2000);
+                            }
+                        });
+
+                        if (entry.target.id) {
+                            navLinks.forEach(link => {
+                                link.classList.toggle('active', link.dataset.target === entry.target.id);
+                            });
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.dataset.target;
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            const ctx = document.getElementById('setiChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['SETI@home (年間予算)', 'ブレイクスルー・リッスン (総投資額)'],
+                    datasets: [{
+                        label: '投資額（米ドル）',
+                        data: [500000, 100000000],
+                        backgroundColor: [
+                            'rgba(216, 195, 165, 0.6)',
+                            'rgba(232, 90, 79, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(216, 195, 165, 1)',
+                            'rgba(232, 90, 79, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            type: 'logarithmic',
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    if (value === 100000000) return '1億ドル';
+                                    if (value === 1000000) return '100万ドル';
+                                    if (value === 10000) return '1万ドル';
+                                    return null;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
