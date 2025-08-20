@@ -1,78 +1,352 @@
-<!doctype html>
-<html lang="ja">
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>リサーチ・インデックス | hobby research</title>
-  <meta name="description" content="趣味のリサーチをまとめるインデックス。テーマ別（くま／ねこ）に整理しています。">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Noto Sans JP', system-ui, -apple-system, sans-serif; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫と人間の物語：伴侶となるまでの軌跡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .bg-primary { background-color: #FDFBF8; }
+        .bg-secondary { background-color: #F4EFEA; }
+        .text-accent { color: #D97706; }
+        .border-accent { border-color: #D97706; }
+        .bg-accent { background-color: #D97706; }
+        .bg-accent-light { background-color: #FEF3C7; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #F4EFEA;
+            border: 4px solid #D97706;
+            z-index: 1;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+                max-height: 500px;
+            }
+        }
+    </style>
 </head>
-<body class="bg-amber-50 text-gray-800 antialiased">
-  <header class="bg-white/80 backdrop-blur sticky top-0 z-50 border-b">
-    <div class="container mx-auto px-6 py-4 flex items-center justify-between">
-      <h1 class="text-xl md:text-2xl font-bold">趣味のリサーチ・インデックス</h1>
-      <nav class="hidden md:block text-sm text-gray-600">
-        <a href="bear/" class="hover:text-amber-700 mr-4">くま</a>
-        <a href="cat/" class="hover:text-amber-700">ねこ</a>
-      </nav>
-    </div>
-  </header>
+<body class="bg-primary">
 
-  <main class="container mx-auto px-6 py-10">
-    <p class="text-gray-600 mb-8">
-      興味のあるテーマをカードから選んでね。各ページにデータ可視化やリサーチメモをまとめていきます。
-    </p>
+    <header id="header" class="bg-secondary shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="text-xl font-bold text-accent">猫と人間の物語</div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#intro" class="hover:text-accent transition-colors">はじめに</a>
+                <a href="#domestication" class="hover:text-accent transition-colors">共生の始まり</a>
+                <a href="#history" class="hover:text-accent transition-colors">歴史の変遷</a>
+                <a href="#modern" class="hover:text-accent transition-colors">現代のパートナー</a>
+                <a href="#data" class="hover:text-accent transition-colors">データで見る</a>
+            </div>
+            <div class="md:hidden">
+                <select id="mobile-nav" class="bg-white border border-gray-300 rounded-md p-1">
+                    <option value="#intro">はじめに</option>
+                    <option value="#domestication">共生の始まり</option>
+                    <option value="#history">歴史の変遷</option>
+                    <option value="#modern">現代のパートナー</option>
+                    <option value="#data">データで見る</option>
+                </select>
+            </div>
+        </nav>
+    </header>
 
-    <div class="grid sm:grid-cols-2 gap-6">
-      <!-- Bear card -->
-      <a href="bear/" class="group block bg-white rounded-2xl shadow hover:shadow-md transition p-6">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-2xl font-bold">くま（ヒグマ）</h2>
-            <p class="text-gray-600 mt-2 text-sm">個体数推移・人身/農業被害・共存策のインタラクティブ可視化</p>
-          </div>
-          <div class="text-5xl">🐻</div>
+    <main>
+        <section id="intro" class="py-20 bg-primary">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">なぜ猫は、<br class="md:hidden"><span class="text-accent">「ペット」</span>になったのか？</h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mt-6">
+                    かつて害獣駆除という役割を担っていた猫は、その実用的な機能を完全に手放し、現代社会で「人間の伴侶」という唯一無二の存在となりました。このアプリケーションは、その不可逆的な変容の軌跡を、生物学的、歴史的、そして社会的な視点からインタラクティブに探求します。
+                </p>
+            </div>
+        </section>
+
+        <section id="domestication" class="py-20 bg-secondary">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2">共生の始まり</h2>
+                <p class="text-center text-lg mb-12 max-w-2xl mx-auto">猫の家畜化は、人間が意図した犬とは異なり、猫自身が人間の生活圏に入り込む「自己家畜化」でした。この始まりの違いが、現代の関係性にも影響を与えています。</p>
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-primary p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold mb-4 text-center">🐈 猫の場合</h3>
+                        <ul class="space-y-3 text-left">
+                            <li><strong class="text-accent">起源:</strong> 自己家畜化</li>
+                            <li><strong class="text-accent">動機:</strong> 穀物倉庫のネズミを求めて</li>
+                            <li><strong class="text-accent">遺伝子:</strong> 野生種との差はごく僅か</li>
+                            <li><strong class="text-accent">関係性:</strong> 独立性が高く、対等なパートナー</li>
+                        </ul>
+                    </div>
+                    <div class="bg-primary p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold mb-4 text-center">🐕 犬の場合</h3>
+                        <ul class="space-y-3 text-left">
+                            <li><strong class="text-accent">起源:</strong> 人間主導の家畜化</li>
+                            <li><strong class="text-accent">動機:</strong> 狩猟協力や警備のため</li>
+                            <li><strong class="text-accent">遺伝子:</strong> オオカミから大きく変化</li>
+                            <li><strong class="text-accent">関係性:</strong> 従順で、階層的なパートナー</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="history" class="py-20 bg-primary">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2">歴史の変遷</h2>
+            <p class="text-center text-lg mb-12 max-w-2xl mx-auto">時代と地域によって、猫の役割は大きく変動しました。神として崇められたかと思えば、悪魔の使いとして迫害されることも。その歴史を辿ってみましょう。</p>
+                <div class="relative max-w-2xl mx-auto">
+                    <div class="absolute left-4 top-0 h-full w-0.5 bg-gray-300"></div>
+                    <div class="space-y-12">
+                        <div class="timeline-item pl-12 cursor-pointer" onclick="toggleDetails('history-1')">
+                            <h3 class="text-xl font-bold text-accent">古代エジプト（紀元前1000年頃）</h3>
+                            <p class="font-semibold">神聖な存在への昇華</p>
+                            <div id="history-1" class="hidden mt-2 text-gray-600">
+                                穀物を守る益獣から、豊穣の女神バステトの化身として神格化。殺すことは死罪とされ、死後はミイラとして手厚く葬られました。
+                            </div>
+                        </div>
+                        <div class="timeline-item pl-12 cursor-pointer" onclick="toggleDetails('history-2')">
+                            <h3 class="text-xl font-bold text-accent">中世ヨーロッパ</h3>
+                            <p class="font-semibold">魔女の象徴としての受難</p>
+                            <div id="history-2" class="hidden mt-2 text-gray-600">
+                                夜行性や単独行動を好む性質から悪魔と結びつけられ、大規模な虐殺の対象に。結果、天敵を失ったネズミがペストを蔓延させ、人口の3分の1が失われる悲劇を招きました。
+                            </div>
+                        </div>
+                        <div class="timeline-item pl-12 cursor-pointer" onclick="toggleDetails('history-3')">
+                            <h3 class="text-xl font-bold text-accent">日本（奈良〜江戸時代）</h3>
+                            <p class="font-semibold">実用と幸運の象徴</p>
+                            <div id="history-3" class="hidden mt-2 text-gray-600">
+                                仏教経典や蚕をネズミから守る実用的な役割に加え、「招き猫」に象徴されるように幸運を招く縁起物としても愛され、社会に定着しました。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="modern" class="py-20 bg-secondary">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2">現代のパートナー</h2>
+                <p class="text-center text-lg mb-12 max-w-2xl mx-auto">現代社会の構造変化は、猫の持つ生物学的特性を「メリット」として際立たせ、猫を「最高の伴侶」という地位に押し上げました。</p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-primary p-6 rounded-lg shadow-lg text-center">
+                        <div class="text-4xl mb-4">🏙️</div>
+                        <h3 class="text-xl font-bold mb-2">都市化とライフスタイル</h3>
+                        <p>散歩が不要で室内飼育に適した性質が、集合住宅での生活に完璧に適合。単身・共働き世帯の増加も、留守番が得意な猫の特性と合致しました。</p>
+                    </div>
+                    <div class="bg-primary p-6 rounded-lg shadow-lg text-center">
+                        <div class="text-4xl mb-4">📈</div>
+                        <h3 class="text-xl font-bold mb-2">経済とペット産業</h3>
+                        <p>充実したペットフードが「ネズミ捕り」の役割を不要に。代わりに猫は巨大なペット市場の主役となり、その価値は「機能」から「経済活動」へと移行しました。</p>
+                    </div>
+                    <div class="bg-primary p-6 rounded-lg shadow-lg text-center">
+                        <div class="text-4xl mb-4">❤️</div>
+                        <h3 class="text-xl font-bold mb-2">心理的なニーズ</h3>
+                        <p>ストレス社会において、猫が提供する「非支配的」で「マイペース」な関係性が、人々に癒やしと孤独感の解消を提供。心理的なインフラとしての役割を担っています。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="data" class="py-20 bg-primary">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-2">データで見る猫と人間の関係</h2>
+                <p class="text-center text-lg mb-8 max-w-2xl mx-auto">日本のペット市場のデータは、猫の人気と役割の変化を如実に示しています。下のボタンで表示を切り替えて、その動向を確認してみましょう。</p>
+                <div class="text-center mb-8 space-x-2">
+                    <button id="btn-ownership" class="bg-accent text-white px-4 py-2 rounded-md shadow-md hover:bg-opacity-80 transition-all">飼育頭数の推移</button>
+                    <button id="btn-market" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md shadow-md hover:bg-gray-400 transition-all">フード市場規模</button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="catDataChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-secondary mt-20 py-10">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <h3 class="text-2xl font-bold mb-4 text-accent">結論：不可逆的な変容</h3>
+            <p class="max-w-3xl mx-auto">
+                猫の地位は「偶然の共生」から始まり、「歴史的役割の喪失と再評価」を経て、「現代的価値の創出」という三段階の変容を遂げました。かつて「使えるから飼う」存在だった猫が、今や「いるだけで価値がある」存在となったのです。この物語は、人類が他の生物に求める価値が、機能性から精神的な絆へとシフトしたことを象徴しています。
+            </p>
+            <p class="mt-6 text-sm">&copy; 2025 Interactive Cat Report. All rights reserved.</p>
         </div>
-        <div class="mt-4 text-amber-800 font-semibold group-hover:translate-x-1 transition inline-flex items-center">
-          開く <span class="ml-1">→</span>
-        </div>
-      </a>
+    </footer>
 
-      <!-- Cat card -->
-      <a href="cat/" class="group block bg-white rounded-2xl shadow hover:shadow-md transition p-6">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-2xl font-bold">ねこ</h2>
-            <p class="text-gray-600 mt-2 text-sm">Gemini Deep Research の内容を反映予定</p>
-          </div>
-          <div class="text-5xl">🐱</div>
-        </div>
-        <div class="mt-4 text-amber-800 font-semibold group-hover:translate-x-1 transition inline-flex items-center">
-          開く <span class="ml-1">→</span>
-        </div>
-      </a>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.addEventListener('change', (event) => {
+                window.location.hash = event.target.value;
+            });
+            
+            const chartData = {
+                ownership: {
+                    labels: ['2017', '2019', '2021', '2023'],
+                    datasets: [
+                        {
+                            label: '猫の飼育頭数 (万頭)',
+                            data: [953, 978, 960, 975],
+                            borderColor: '#D97706',
+                            backgroundColor: '#FEF3C7',
+                            type: 'line',
+                            yAxisID: 'y',
+                            tension: 0.1,
+                            fill: true,
+                        },
+                        {
+                            label: '犬の飼育頭数 (万頭)',
+                            data: [892, 879, 710, 680],
+                            borderColor: '#6B7280',
+                            backgroundColor: '#E5E7EB',
+                            type: 'line',
+                            yAxisID: 'y',
+                            tension: 0.1,
+                            fill: true,
+                        }
+                    ]
+                },
+                market: {
+                    labels: ['2017', '2019', '2021', '2023'],
+                    datasets: [
+                        {
+                            label: 'キャットフード市場 (億円)',
+                            data: [1550, 1620, 1750, 1900],
+                            backgroundColor: '#D97706',
+                            type: 'bar',
+                            yAxisID: 'y1',
+                        },
+                        {
+                            label: 'ドッグフード市場 (億円)',
+                            data: [1530, 1500, 1480, 1450],
+                            backgroundColor: '#6B7280',
+                            type: 'bar',
+                            yAxisID: 'y1',
+                        }
+                    ]
+                }
+            };
 
-    <div class="mt-10 text-sm text-gray-500">
-      <p>更新日: <span id="updated"></span></p>
-    </div>
-  </main>
+            const ctx = document.getElementById('catDataChart').getContext('2d');
+            let myChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData.ownership,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '猫と犬の飼育頭数の推移 (2017-2023)',
+                            font: { size: 16 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        const unit = context.chart.options.scales.y.title.text.includes('万頭') ? ' 万頭' : ' 億円';
+                                        label += context.parsed.y + unit;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: false,
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '飼育頭数 (万頭)'
+                            }
+                        },
+                    }
+                }
+            });
 
-  <footer class="bg-white/70 border-t">
-    <div class="container mx-auto px-6 py-6 text-sm text-center text-gray-600">
-      © <span id="year"></span> hobby research
-    </div>
-  </footer>
+            const btnOwnership = document.getElementById('btn-ownership');
+            const btnMarket = document.getElementById('btn-market');
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('updated').textContent = new Date().toLocaleDateString('ja-JP');
-  </script>
+            function updateChart(dataType) {
+                const data = chartData[dataType];
+                myChart.data = data;
+                
+                if (dataType === 'ownership') {
+                    myChart.options.plugins.title.text = '猫と犬の飼育頭数の推移 (2017-2023)';
+                    myChart.options.scales.y = {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: '飼育頭数 (万頭)' }
+                    };
+                    delete myChart.options.scales.y1;
+                    btnOwnership.classList.add('bg-accent', 'text-white');
+                    btnOwnership.classList.remove('bg-gray-300', 'text-gray-700');
+                    btnMarket.classList.add('bg-gray-300', 'text-gray-700');
+                    btnMarket.classList.remove('bg-accent', 'text-white');
+
+                } else {
+                    myChart.options.plugins.title.text = 'ペットフード市場規模の推移 (2017-2023)';
+                    myChart.options.scales.y = {
+                        display: false
+                    };
+                    myChart.options.scales.y1 = {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: '市場規模 (億円)' }
+                    };
+                    btnMarket.classList.add('bg-accent', 'text-white');
+                    btnMarket.classList.remove('bg-gray-300', 'text-gray-700');
+                    btnOwnership.classList.add('bg-gray-300', 'text-gray-700');
+                    btnOwnership.classList.remove('bg-accent', 'text-white');
+                }
+                
+                myChart.update();
+            }
+
+            btnOwnership.addEventListener('click', () => updateChart('ownership'));
+            btnMarket.addEventListener('click', () => updateChart('market'));
+        });
+
+        function toggleDetails(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('hidden');
+        }
+    </script>
 </body>
 </html>
