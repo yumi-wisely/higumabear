@@ -1,0 +1,463 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ja"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;ヒグマとの共存を考える | インタラクティブ・レポート&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Chosen Palette: Calm Harmony --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Application Structure Plan: A thematic, single-page scrolling application. The structure is designed to guide the user through a narrative journey: 1. Introduction with key stats, 2. Understanding the bear's ecology, 3. Visualizing the population changes, 4. Exploring the history and nature of human conflict through interactive charts, and 5. Discovering future-oriented solutions. This non-linear but guided structure allows users to grasp the core issues quickly and dive deeper into data points of interest, which is more engaging and effective for a general audience than mirroring the formal report's structure. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Visualization &amp; Content Choices:<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>- Population Trend: Report Info -&gt; Population estimates (1990-2022). Goal -&gt; Show Change. Viz -&gt; Line Chart. Interaction -&gt; Hover tooltips. Justification -&gt; Clearly visualizes the significant population increase over three decades. Library -&gt; Chart.js.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>- Human Casualties: Report Info -&gt; Victim data (1962-2024). Goal -&gt; Compare trends and categories. Viz -&gt; Bar Chart. Interaction -&gt; Buttons to switch between total casualties over time and a breakdown by activity. Justification -&gt; Shows the recent rise in incidents and provides crucial context on risk factors. Library -&gt; Chart.js.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>- Agricultural Damage: Report Info -&gt; Damage breakdown by crop (2021). Goal -&gt; Show Proportions. Viz -&gt; Donut Chart. Interaction -&gt; Hover tooltips. Justification -&gt; Instantly communicates the disproportionate impact on dent corn, a key factor in the conflict. Library -&gt; Chart.js.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>- Solutions: Report Info -&gt; Proactive strategies. Goal -&gt; Organize &amp; Inform. Viz -&gt; Interactive tabs with icons. Interaction -&gt; Click to reveal details. Justification -&gt; Breaks down complex solutions into easily digestible, actionable categories, enhancing user understanding. Method -&gt; HTML/CSS/JS.</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Noto Sans JP', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #F9F9F7;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #374151;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-left: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-right: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 300px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 400px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@media (min-width: 768px) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>height: 350px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: color 0.3s, border-bottom-color 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #A16207;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #A16207;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 2px solid #A16207;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.tab-button.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #A16207;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #FFFFFF;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="antialiased"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header id="header" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;nav class="container mx-auto px-6 py-3 flex justify-between items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-xl font-bold text-gray-800"&gt;ヒグマとの共存&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="hidden md:flex space-x-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#ecology" class="nav-link text-gray-600 pb-1"&gt;生態&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#population" class="nav-link text-gray-600 pb-1"&gt;生息状況&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#conflict" class="nav-link text-gray-600 pb-1"&gt;人間との軋轢&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#solutions" class="nav-link text-gray-600 pb-1"&gt;未来への対策&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="hero" class="py-20 bg-amber-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h1 class="text-4xl md:text-6xl font-bold text-amber-900 mb-4"&gt;ヒグマと共存する未来へ&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-lg text-gray-700 max-w-3xl mx-auto mb-12"&gt;北海道の象徴、ヒグマ。その数と生息域が変化する中で、私たち人間との関係も新たな局面を迎えています。データを通じて、ヒグマの現状を理解し、持続可能な共存の道を探ります。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-6 rounded-lg shadow-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold text-amber-800"&gt;推定生息数 (2022年)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-5xl font-bold text-gray-800 mt-2"&gt;12,200&lt;span class="text-2xl ml-2"&gt;頭&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-gray-600 mt-2"&gt;(中央値)&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-6 rounded-lg shadow-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold text-amber-800"&gt;1990年からの増加率&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-5xl font-bold text-gray-800 mt-2"&gt;約2.2&lt;span class="text-2xl ml-2"&gt;倍&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-gray-600 mt-2"&gt;(推定5,200頭から増加)&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="ecology" class="py-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-center mb-2 text-gray-800"&gt;生態を知る：ヒグマの暮らし&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-center text-gray-600 max-w-3xl mx-auto mb-12"&gt;ヒグマの行動や食性を理解することは、人間との軋轢を減らす第一歩です。彼らは非常に高い学習能力を持ち、季節ごとに異なるものを食べて暮らしています。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white p-8 rounded-lg shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-6 text-center"&gt;季節で変わる食生活&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="text-4xl mb-2"&gt;春 🌸&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="text-lg font-bold mb-2"&gt;冬眠明けの栄養補給&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-gray-600"&gt;ザゼンソウやフキなどの植物の新芽を主に食べます。弱ったエゾシカを捕食することも。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="text-4xl mb-2"&gt;夏 ☀️&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="text-lg font-bold mb-2"&gt;多様なエネルギー源&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-gray-600"&gt;アリやハチ、ヤマグワの実など、植物に加えて昆虫や果実も食べます。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="text-4xl mb-2"&gt;秋 🍂&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="text-lg font-bold mb-2"&gt;冬眠への準備&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-gray-600"&gt;ドングリなどの高カロリーな木の実が主食に。遡上するサケも重要な食料です。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="text-4xl mb-2"&gt;冬 ❄️&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="text-lg font-bold mb-2"&gt;冬ごもり&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-gray-600"&gt;巣穴で絶食状態となり、春まで過ごします。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="mt-10 border-t pt-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4 class="text-xl font-bold text-center mb-4"&gt;驚異の学習能力と軋轢の構造&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-gray-700 max-w-4xl mx-auto"&gt;ヒグマは一度覚えた味や場所に執着します。秋にドングリなどが不作になると、人里の農作物（特にデントコーン）や生ゴミが格好の標的となります。これらを「簡単で美味しい餌」と学習した個体は、人への警戒心を失い、出没を繰り返す「問題個体」となってしまうのです。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="population" class="py-16 bg-gray-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-center mb-2 text-gray-800"&gt;生息状況の変化：増加する個体数&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;p class="text-center text-gray-600 max-w-3xl mx-auto mb-12"&gt;1990年の「春グマ駆除」制度廃止以降、ヒグマの個体数は回復し、増加傾向にあります。これは種の保全にとっては良いニュースですが、人間社会との新たな緊張関係を生む要因ともなっています。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white p-8 rounded-lg shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold mb-6 text-center"&gt;北海道におけるヒグマ個体数推定値の推移&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;canvas id="populationChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="mt-10 border-t pt-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h4 class="text-xl font-bold text-center mb-4"&gt;保護と管理のパラドックス&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-gray-700 max-w-4xl mx-auto"&gt;全道的に個体数が増加する一方、天塩・増毛や石狩西部など、遺伝的に孤立し「絶滅のおそれのある地域個体群」に指定されている地域も存在します。人身被害のリスクが高まる地域と、保護が必要な地域が隣接・重複しており、地域の実情に合わせたきめ細やかな管理が求められるという、非常に難しい課題に直面しています。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="conflict" class="py-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-center mb-2 text-gray-800"&gt;人間との軋轢：被害の現状&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-center text-gray-600 max-w-3xl mx-auto mb-12"&gt;ヒグマの個体数と生息域の拡大に伴い、人身被害や農業被害が深刻化しています。被害のデータは、私たちがどのような状況でヒグマと遭遇し、何が彼らを人里に引きつけているのかを物語っています。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-1 lg:grid-cols-2 gap-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-8 rounded-lg shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold mb-4 text-center"&gt;人身被害の状況&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;div class="flex justify-center space-x-2 mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button id="casualtiesByYearBtn" class="tab-button px-4 py-2 text-sm font-semibold rounded-md transition bg-gray-200"&gt;年度別推移&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button id="casualtiesByActivityBtn" class="tab-button px-4 py-2 text-sm font-semibold rounded-md transition bg-gray-200"&gt;活動別内訳&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="chart-container h-80 md:h-96"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;canvas id="casualtiesChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p id="casualtiesChartDescription" class="text-sm text-gray-600 mt-4 text-center"&gt;近年、人身被害は再び増加傾向にあります。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-8 rounded-lg shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold mb-4 text-center"&gt;農業被害の内訳 (2021年度)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-gray-600 mb-4 text-center"&gt;農業被害の中でも、特定の作物が突出して狙われています。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="chart-container h-80 md:h-96"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;canvas id="damageChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-gray-600 mt-4 text-center"&gt;飼料用トウモロコシ（デントコーン）が被害の約半数を占めています。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="solutions" class="py-16 bg-amber-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="container mx-auto px-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-center mb-2 text-gray-800"&gt;未来への対策：持続可能な共存戦略&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-center text-gray-600 max-w-3xl mx-auto mb-12"&gt;問題の根本原因は、ヒグマが人里に「餌」を求めてしまう環境にあります。被害発生後の捕獲（対症療法）から、被害を未然に防ぐ「予防」へと、対策の重心を移すことが不可欠です。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white p-8 rounded-lg shadow-lg max-w-5xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center border-b mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button data-tab="prevent" class="solution-tab p-4 font-bold text-lg border-b-4 border-transparent"&gt;① 予防的対策&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button data-tab="manage" class="solution-tab p-4 font-bold text-lg border-b-4 border-transparent"&gt;② 管理体制の構築&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button data-tab="future" class="solution-tab p-4 font-bold text-lg border-b-4 border-transparent"&gt;③ 未来志向の対策&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="solution-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="prevent" class="solution-panel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div class="grid grid-cols-1 md:grid-cols-3 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="text-5xl mb-3"&gt;⚡️&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h4 class="text-xl font-bold mb-2"&gt;電気柵の設置&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p class="text-gray-600"&gt;農地や集落を囲い、物理的に侵入を防ぎます。「ここは危険」と学習させる効果が期待できます。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="text-5xl mb-3"&gt;🗑️&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h4 class="text-xl font-bold mb-2"&gt;誘引物管理の徹底&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p class="text-gray-600"&gt;生ゴミや廃棄農作物、放置果樹を適切に処理し、ヒグマを人里に引き寄せない環境を作ります。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="text-5xl mb-3"&gt;🌾&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;h4 class="text-xl font-bold mb-2"&gt;代替作物の導入&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p class="text-gray-600"&gt;デントコーンの代わりに、ヒグマを誘引しにくいソルガムなどを栽培する研究が進んでいます。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="manage" class="solution-panel hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-gray-700 text-lg text-center leading-relaxed"&gt;被害を未然に防ぐ予防策を効果的に実行するためには、行政が中心となり、地域住民、研究機関、猟友会などが連携する強固な管理体制が必要です。地域ごとの状況を正確に把握し、科学的知見に基づいた計画を立て、継続的に実行していくことが求められます。また、市街地での緊急捕獲を可能にする法改正など、制度的なサポートも重要です。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="future" class="solution-panel hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-gray-700 text-lg text-center leading-relaxed"&gt;問題個体を捕獲しても、その個体を惹きつけた誘引物が残っていれば、また別の個体が現れるという「いたちごっこ」に陥ります。真の解決策は、ヒグマが人里の餌に依存する「負の学習」の機会そのものを断つことです。人間側が行動を変え、ヒグマが「餌付け」される環境をなくすこと。それこそが、被害を根本から減らし、人間とヒグマが共に持続可能な未来を築くための唯一の道です。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="bg-gray-800 text-white py-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="container mx-auto px-6 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;このページは提供された報告書に基づき、教育目的で作成されました。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-sm text-gray-400 mt-2"&gt;Interactive Report on Human-Bear Coexistence&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', function () {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const populationData = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labels: ['1990年', '2014年', '2020年', '2022年'],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>label: 'ヒグマ推定生息数 (中央値)',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: [5200, 10500, 11700, 12200],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>borderColor: '#A16207',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>backgroundColor: 'rgba(161, 98, 7, 0.1)',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>fill: true,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>tension: 0.4</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const casualtiesByYearData = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labels: ['S37-S46', 'S47-S56', 'S57-H03', 'H04-H13', 'H14-H23', 'H24-R05'],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>label: '死傷者数',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: [61, 23, 14, 20, 24, 49],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>backgroundColor: '#CA8A04',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const casualtiesByActivityData = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labels: ['狩猟・許可捕獲', '山菜・キノコ採り', '農作業', '林業', '登山・渓流釣り', 'その他'],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>label: '活動別死傷者割合 (%)',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: [37, 24, 8, 7, 6, 18],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>backgroundColor: ['#78350F', '#A16207', '#CA8A04', '#EAB308', '#FACC15', '#FEF08A'],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const damageData = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labels: ['デントコーン', 'ビート', 'スイートコーン', '果樹', '水稲', '牧草', '牛', 'その他'],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>label: '農業被害額の割合',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: [49.6, 16.4, 5.7, 3.8, 3.4, 2.7, 1.9, 14.2],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>backgroundColor: [</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>'#78350F', '#A16207', '#B45309', '#CA8A04', '#D97706', '#EAB308', '#F59E0B', '#FCD34D'</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>hoverOffset: 4</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const chartOptions = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>legend: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>position: 'top',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>tooltip: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>callbacks: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: function(context) {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>let label = context.dataset.label || '';</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>if (label) {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>label += ': ';</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>if (context.parsed.y !== null) {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>label += context.parsed.y.toLocaleString() + '頭';</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>return label;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>beginAtZero: true</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let populationChart, casualtiesChart, damageChart;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>function createPopulationChart() {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const ctx = document.getElementById('populationChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>populationChart = new Chart(ctx, {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>type: 'line',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: populationData,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>options: chartOptions</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>function createCasualtiesChart(type = 'year') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const ctx = document.getElementById('casualtiesChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (casualtiesChart) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>casualtiesChart.destroy();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>let chartData, chartType, chartSpecificOptions;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (type === 'year') {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>chartData = casualtiesByYearData;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>chartType = 'bar';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>document.getElementById('casualtiesChartDescription').textContent = '昭和後期から平成にかけて減少しましたが、近年は再び増加傾向にあります。';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>chartSpecificOptions = {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>tooltip: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>callbacks: {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>label: (context) =&gt; `${context.dataset.label}: ${context.parsed.y}人`</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>scales: { y: { title: { display: true, text: '死傷者数（人）' } } }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>chartData = casualtiesByActivityData;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>chartType = 'pie';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>document.getElementById('casualtiesChartDescription').textContent = '被害は山林での活動中に集中していますが、農作業など人里近くでも発生しています。';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>chartSpecificOptions = {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>tooltip: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>callbacks: {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>label: (context) =&gt; `${context.label}: ${context.parsed}%`</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>casualtiesChart = new Chart(ctx, {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>type: chartType,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: chartData,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>options: { ...chartOptions, ...chartSpecificOptions, scales: chartType === 'bar' ? chartSpecificOptions.scales : {} }</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>function createDamageChart() {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const ctx = document.getElementById('damageChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>damageChart = new Chart(ctx, {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>type: 'doughnut',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: damageData,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>legend: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>position: 'right',</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>labels: {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>boxWidth: 20</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>tooltip: {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>callbacks: {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>label: function(context) {</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>let label = context.label || '';</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>if (label) {</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>label += ': ';</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>if (context.parsed !== null) {</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>label += context.parsed + '%';</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>return label;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>createPopulationChart();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>createCasualtiesChart('year');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('casualtiesByYearBtn').classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>createDamageChart();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('casualtiesByYearBtn').addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>createCasualtiesChart('year');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.querySelector('#casualtiesByYearBtn').classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.querySelector('#casualtiesByActivityBtn').classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('casualtiesByActivityBtn').addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>createCasualtiesChart('activity');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.querySelector('#casualtiesByActivityBtn').classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.querySelector('#casualtiesByYearBtn').classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const solutionTabs = document.querySelectorAll('.solution-tab');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const solutionPanels = document.querySelectorAll('.solution-panel');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const activeTabClasses = ['border-amber-700', 'text-amber-800'];</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>function switchSolutionTab(tabName) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>solutionTabs.forEach(tab =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (tab.dataset.tab === tabName) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tab.classList.add(...activeTabClasses);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tab.classList.remove(...activeTabClasses);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>solutionPanels.forEach(panel =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (panel.id === tabName) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>panel.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>panel.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>solutionTabs.forEach(tab =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tab.addEventListener('click', () =&gt; switchSolutionTab(tab.dataset.tab));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>switchSolutionTab('prevent');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const navLinks = document.querySelectorAll('.nav-link');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const sections = document.querySelectorAll('section');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>window.addEventListener('scroll', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let current = '';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>sections.forEach(section =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const sectionTop = section.offsetTop;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (pageYOffset &gt;= sectionTop - 60) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>current = section.getAttribute('id');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>navLinks.forEach(link =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>link.classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (link.getAttribute('href').includes(current)) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>link.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
