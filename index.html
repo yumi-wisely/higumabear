@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ヒグマとの共存を考える | インタラクティブ・レポート</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background-color: #F9F9F7;
+      color: #374151;
+    }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 340px;
+      max-height: 420px;
+    }
+    @media (min-width: 768px) {
+      .chart-container { height: 380px; }
+    }
+    .nav-link { transition: color .3s, border-bottom-color .3s; }
+    .nav-link:hover { color: #A16207; }
+    .nav-link.active { color: #A16207; border-bottom: 2px solid #A16207; }
+    .tab-button.active { background-color: #A16207; color: #FFFFFF; }
+  </style>
+</head>
+<body class="antialiased">
+  <!-- Header -->
+  <header id="header" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+    <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <div class="text-xl font-bold text-gray-800">ヒグマとの共存</div>
+      <div class="hidden md:flex space-x-8">
+        <a href="#ecology" class="nav-link text-gray-600 pb-1">生態</a>
+        <a href="#population" class="nav-link text-gray-600 pb-1">生息状況</a>
+        <a href="#conflict" class="nav-link text-gray-600 pb-1">人間との軋轢</a>
+        <a href="#solutions" class="nav-link text-gray-600 pb-1">未来への対策</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <!-- Hero -->
+    <section id="hero" class="py-20 bg-amber-50">
+      <div class="container mx-auto px-6 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-amber-900 mb-4">
+          ヒグマと共存する未来へ
+        </h1>
+        <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-12">
+          北海道の象徴、ヒグマ。その数と生息域が変化する中で、私たち人間との関係も新たな局面を迎えています。
+          データを通じて、ヒグマの現状を理解し、持続可能な共存の道を探ります。
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-2xl font-bold text-amber-800">推定生息数 (2022年)</h3>
+            <p class="text-5xl font-bold text-gray-800 mt-2">12,200
+              <span class="text-2xl ml-2">頭</span>
+            </p>
+            <p class="text-gray-600 mt-2">(中央値)</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h3 class="text-2xl font-bold text-amber-800">1990年からの増加率</h3>
+            <p class="text-5xl font-bold text-gray-800 mt-2">約2.2
+              <span class="text-2xl ml-2">倍</span>
+            </p>
+            <p class="text-gray-600 mt-2">(推定5,200頭から増加)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ecology -->
+    <section id="ecology" class="py-16">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">生態を知る：ヒグマの暮らし</h2>
+        <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">
+          ヒグマの行動や食性を理解することは、人間との軋轢を減らす第一歩です。
+          彼らは非常に高い学習能力を持ち、季節ごとに異なるものを食べて暮らしています。
+        </p>
+        <div class="bg-white p-8 rounded-lg shadow-lg">
+          <h3 class="text-2xl font-bold mb-6 text-center">季節で変わる食生活</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div>
+              <div class="text-4xl mb-2">春 🌸</div>
+              <h4 class="text-lg font-bold mb-2">冬眠明けの栄養補給</h4>
+              <p class="text-gray-600">ザゼンソウやフキなどの植物の新芽を主に食べます。弱ったエゾシカを捕食することも。</p>
+            </div>
+            <div>
+              <div class="text-4xl mb-2">夏 ☀️</div>
+              <h4 class="text-lg font-bold mb-2">多様なエネルギー源</h4>
+              <p class="text-gray-600">アリやハチ、ヤマグワの実など、植物に加えて昆虫や果実も食べます。</p>
+            </div>
+            <div>
+              <div class="text-4xl mb-2">秋 🍂</div>
+              <h4 class="text-lg font-bold mb-2">冬眠への準備</h4>
+              <p class="text-gray-600">ドングリなどの高カロリーな木の実が主食に。遡上するサケも重要な食料です。</p>
+            </div>
+            <div>
+              <div class="text-4xl mb-2">冬 ❄️</div>
+              <h4 class="text-lg font-bold mb-2">冬ごもり</h4>
+              <p class="text-gray-600">巣穴で絶食状態となり、春まで過ごします。</p>
+            </div>
+          </div>
+          <div class="mt-10 border-t pt-6">
+            <h4 class="text-xl font-bold text-center mb-4">驚異の学習能力と軋轢の構造</h4>
+            <p class="text-gray-700 max-w-4xl mx-auto">
+              ヒグマは一度覚えた味や場所に執着します。秋にドングリなどが不作になると、人里の農作物（特にデントコーン）や生ゴミが格好の標的となります。
+              これらを「簡単で美味しい餌」と学習した個体は、人への警戒心を失い、出没を繰り返す「問題個体」となってしまうのです。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Population -->
+    <section id="population" class="py-16 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">生息状況の変化：増加する個体数</h2>
+        <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">
+          1990年の「春グマ駆除」制度廃止以降、ヒグマの個体数は回復し、増加傾向にあります。
+          これは種の保全にとっては良いニュースですが、人間社会との新たな緊張関係を生む要因ともなっています。
+        </p>
+        <div class="bg-white p-8 rounded-lg shadow-lg">
+          <h3 class="text-2xl font-bold mb-6 text-center">北海道におけるヒグマ個体数推定値の推移</h3>
+          <div class="chart-container">
+            <canvas id="populationChart"></canvas>
+          </div>
+          <div class="mt-10 border-t pt-6">
+            <h4 class="text-xl font-bold text-center mb-4">保護と管理のパラドックス</h4>
+            <p class="text-gray-700 max-w-4xl mx-auto">
+              全道的に個体数が増加する一方、天塩・増毛や石狩西部など、遺伝的に孤立し「絶滅のおそれのある地域個体群」に指定されている地域も存在します。
+              人身被害のリスクが高まる地域と、保護が必要な地域が隣接・重複しており、地域の実情に合わせたきめ細やかな管理が求められるという、非常に難しい課題に直面しています。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conflict -->
+    <section id="conflict" class="py-16">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">人間との軋轢：被害の現状</h2>
+        <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">
+          ヒグマの個体数と生息域の拡大に伴い、人身被害や農業被害が深刻化しています。
+          被害のデータは、私たちがどのような状況でヒグマと遭遇し、何が彼らを人里に引きつけているのかを物語っています。
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <!-- Casualties -->
+          <div class="bg-white p-8 rounded-lg shadow-lg">
+            <h3 class="text-2xl font-bold mb-4 text-center">人身被害の状況</h3>
+            <div class="flex justify-center space-x-2 mb-4">
+              <button id="casualtiesByYearBtn"
+                class="tab-button px-4 py-2 text-sm font-semibold rounded-md transition bg-gray-200">
+                年度別推移
+              </button>
+              <button id="casualtiesByActivityBtn"
+                class="tab-button px-4 py-2 text-sm font-semibold rounded-md transition bg-gray-200">
+                活動別内訳
+              </button>
+            </div>
+            <div class="chart-container h-80 md:h-96">
+              <canvas id="casualtiesChart"></canvas>
+            </div>
+            <p id="casualtiesChartDescription" class="text-sm text-gray-600 mt-4 text-center">
+              近年、人身被害は再び増加傾向にあります。
+            </p>
+          </div>
+
+          <!-- Damage -->
+          <div class="bg-white p-8 rounded-lg shadow-lg">
+            <h3 class="text-2xl font-bold mb-4 text-center">農業被害の内訳 (2021年度)</h3>
+            <p class="text-sm text-gray-600 mb-4 text-center">
+              農業被害の中でも、特定の作物が突出して狙われています。
+            </p>
+            <div class="chart-container h-80 md:h-96">
+              <canvas id="damageChart"></canvas>
+            </div>
+            <p class="text-sm text-gray-600 mt-4 text-center">
+              飼料用トウモロコシ（デントコーン）が被害の約半数を占めています。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solutions -->
+    <section id="solutions" class="py-16 bg-amber-50">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">未来への対策：持続可能な共存戦略</h2>
+        <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">
+          問題の根本原因は、ヒグマが人里に「餌」を求めてしまう環境にあります。
+          被害発生後の捕獲（対症療法）から、被害を未然に防ぐ「予防」へと、対策の重心を移すことが不可欠です。
+        </p>
+
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-5xl mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center border-b mb-6">
+            <button data-tab="prevent" class="solution-tab p-4 font-bold text-lg border-b-4 border-transparent">
+              ① 予防的対策
+            </button>
+            <button data-tab="manage" class="solution-tab p-4 font-bold text-lg border-b-4 border-transparent">
+              ② 管理体制の構築
+            </button>
+            <button data-tab="future" class="solution-tab p-4 font-bold text-lg border-b-4 border-transparent">
+              ③ 未来志向の対策
+            </button>
+          </div>
+
+          <div id="solution-content">
+            <div id="prevent" class="solution-panel">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                  <div class="text-5xl mb-3">⚡️</div>
+                  <h4 class="text-xl font-bold mb-2">電気柵の設置</h4>
+                  <p class="text-gray-600">
+                    農地や集落を囲い、物理的に侵入を防ぎます。「ここは危険」と学習させる効果が期待できます。
+                  </p>
+                </div>
+                <div class="text-center">
+                  <div class="text-5xl mb-3">🗑️</div>
+                  <h4 class="text-xl font-bold mb-2">誘引物管理の徹底</h4>
+                  <p class="text-gray-600">
+                    生ゴミや廃棄農作物、放置果樹を適切に処理し、ヒグマを人里に引き寄せない環境を作ります。
+                  </p>
+                </div>
+                <div class="text-center">
+                  <div class="text-5xl mb-3">🌾</div>
+                  <h4 class="text-xl font-bold mb-2">代替作物の導入</h4>
+                  <p class="text-gray-600">
+                    デントコーンの代わりに、ヒグマを誘引しにくいソルガムなどを栽培する研究が進んでいます。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div id="manage" class="solution-panel hidden">
+              <p class="text-gray-700 text-lg text-center leading-relaxed">
+                被害を未然に防ぐ予防策を効果的に実行するためには、行政が中心となり、地域住民、研究機関、猟友会などが連携する強固な管理体制が必要です。
+                地域ごとの状況を正確に把握し、科学的知見に基づいた計画を立て、継続的に実行していくことが求められます。
+                また、市街地での緊急捕獲を可能にする法改正など、制度的なサポートも重要です。
+              </p>
+            </div>
+
+            <div id="future" class="solution-panel hidden">
+              <p class="text-gray-700 text-lg text-center leading-relaxed">
+                問題個体を捕獲しても、その個体を惹きつけた誘引物が残っていれば、また別の個体が現れるという「いたちごっこ」に陥ります。
+                真の解決策は、ヒグマが人里の餌に依存する「負の学習」の機会そのものを断つことです。
+                人間側が行動を変え、ヒグマが「餌付け」される環境をなくすこと。
+                それこそが、被害を根本から減らし、人間とヒグマが共に持続可能な未来を築くための唯一の道です。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-6 text-center">
+      <p>このページは提供された報告書に基づき、教育目的で作成されました。</p>
+      <p class="text-sm text-gray-400 mt-2">Interactive Report on Human-Bear Coexistence</p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll for in-page links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Chart Data
+    const populationData = {
+      labels: ['1990年', '2014年', '2020年', '2022年'],
+      datasets: [{
+        label: 'ヒグマ推定生息数 (中央値)',
+        data: [5200, 10500, 11700, 12200],
+        borderColor: '#A16207',
+        backgroundColor: 'rgba(161, 98, 7, 0.1)',
+        fill: true,
+        tension: 0.4
+      }]
+    };
+
+    const casualtiesByYearData = {
+      labels: ['S37-S46', 'S47-S56', 'S57-H03', 'H04-H13', 'H14-H23', 'H24-R05'],
+      datasets: [{
+        label: '死傷者数',
+        data: [61, 23, 14, 20, 24, 49],
+        backgroundColor: '#CA8A04'
+      }]
+    };
+
+    const casualtiesByActivityData = {
+      labels: ['狩猟・許可捕獲', '山菜・キノコ採り', '農作業', '林業', '登山・渓流釣り', 'その他'],
+      datasets: [{
+        label: '活動別死傷者割合 (%)',
+        data: [37, 24, 8, 7, 6, 18],
+        backgroundColor: ['#78350F', '#A16207', '#CA8A04', '#EAB308', '#FACC15', '#FEF08A']
+      }]
+    };
+
+    const damageData = {
+      labels: ['デントコーン', 'ビート', 'スイートコーン', '果樹', '水稲', '牧草', '牛', 'その他'],
+      datasets: [{
+        label: '農業被害額の割合',
+        data: [49.6, 16.4, 5.7, 3.8, 3.4, 2.7, 1.9, 14.2],
+        backgroundColor: ['#78350F', '#A16207', '#B45309', '#CA8A04', '#D97706', '#EAB308', '#F59E0B', '#FCD34D'],
+        hoverOffset: 4
+      }]
+    };
+
+    const baseChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top' },
+        tooltip: {}
+      },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    };
+
+    let populationChart, casualtiesChart, damageChart;
+
+    function createPopulationChart() {
+      const ctx = document.getElementById('populationChart').getContext('2d');
+      populationChart = new Chart(ctx, {
+        type: 'line',
+        data: populationData,
+        options: {
+          ...baseChartOptions,
+          plugins: {
+            ...baseChartOptions.plugins,
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  let label = context.dataset.label ? context.dataset.label + ': ' : '';
+                  if (context.parsed.y !== null) label += context.parsed.y.toLocaleString() + '頭';
+                  return label;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function createCasualtiesChart(type = 'year') {
+      const ctx = document.getElementById('casualtiesChart').getContext('2d');
+      if (casualtiesChart) casualtiesChart.destroy();
+
+      let chartData, chartType, chartSpecificOptions;
+      if (type === 'year') {
+        chartData = casualtiesByYearData;
+        chartType = 'bar';
+        document.getElementById('casualtiesChartDescription').textContent =
+          '昭和後期から平成にかけて減少しましたが、近年は再び増加傾向にあります。';
+        chartSpecificOptions = {
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (context) => `${context.dataset.label}: ${context.parsed.y}人`
+              }
+            }
+          },
+          scales: { y: { title: { display: true, text: '死傷者数（人）' } } }
+        };
+      } else {
+        chartData = casualtiesByActivityData;
+        chartType = 'pie';
+        document.getElementById('casualtiesChartDescription').textContent =
+          '被害は山林での活動中に集中していますが、農作業など人里近くでも発生しています。';
+        chartSpecificOptions = {
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (context) => `${context.label}: ${context.parsed}%`
+              }
+            }
+          }
+        };
+      }
+
+      casualtiesChart = new Chart(ctx, {
+        type: chartType,
+        data: chartData,
+        options: { ...baseChartOptions, ...chartSpecificOptions, scales: chartType === 'bar' ? chartSpecificOptions.scales : {} }
+      });
+    }
+
+    function createDamageChart() {
+      const ctx = document.getElementById('damageChart').getContext('2d');
+      damageChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: damageData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'right', labels: { boxWidth: 20 } },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  let label = context.label ? context.label + ': ' : '';
+                  if (context.parsed !== null) label += context.parsed + '%';
+                  return label;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Initialize charts
+    createPopulationChart();
+    createCasualtiesChart('year');
+    document.getElementById('casualtiesByYearBtn').classList.add('active');
+    createDamageChart();
+
+    // Casualties tab buttons
+    document.getElementById('casualtiesByYearBtn').addEventListener('click', () => {
+      createCasualtiesChart('year');
+      document.getElementById('casualtiesByYearBtn').classList.add('active');
+      document.getElementById('casualtiesByActivityBtn').classList.remove('active');
+    });
+    document.getElementById('casualtiesByActivityBtn').addEventListener('click', () => {
+      createCasualtiesChart('activity');
+      document.getElementById('casualtiesByActivityBtn').classList.add('active');
+      document.getElementById('casualtiesByYearBtn').classList.remove('active');
+    });
+
+    // Solutions tabs
+    const solutionTabs = document.querySelectorAll('.solution-tab');
+    const solutionPanels = document.querySelectorAll('.solution-panel');
+    const activeTabClasses = ['border-amber-700', 'text-amber-800'];
+
+    function switchSolutionTab(tabName) {
+      solutionTabs.forEach(tab => {
+        if (tab.dataset.tab === tabName) tab.classList.add(...activeTabClasses);
+        else tab.classList.remove(...activeTabClasses);
+      });
+      solutionPanels.forEach(panel => {
+        if (panel.id === tabName) panel.classList.remove('hidden');
+        else panel.classList.add('hidden');
+      });
+    }
+    solutionTabs.forEach(tab => tab.addEventListener('click', () => switchSolutionTab(tab.dataset.tab)));
+    switchSolutionTab('prevent');
+
+    // Active nav link highlight using IntersectionObserver
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sectionIds = Array.from(navLinks).map(a => a.getAttribute('href'));
+    const sections = sectionIds.map(id => document.querySelector(id));
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const active = document.querySelector(`a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { root: null, rootMargin: '0px 0px -60% 0px', threshold: 0.1 });
+
+    sections.forEach(sec => sec && observer.observe(sec));
+  </script>
+</body>
+</html>
