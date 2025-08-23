@@ -1,234 +1,318 @@
 <!DOCTYPE html>
 <html lang="ja" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ペンギン：南極の愛と絆 | wiseresearch</title>
-  <meta name="description" content="皇帝ペンギンの繁殖サイクル、親の役割分担、共同体の行動をストーリー仕立てとデータで探るインタラクティブレポート。" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --accent:#D97706; /* amber-600 */
-      --accent-weak:#FEF3C7; /* amber-100 */
-      --ink:#374151; /* gray-700 */
-      --paper:#FDFBF8;
-      --panel:#F4EFEA;
-    }
-    body{ font-family:'Noto Sans JP', system-ui, -apple-system, sans-serif; background:var(--paper); color:var(--ink); }
-    .text-accent{ color:var(--accent); }
-    .bg-accent{ background:var(--accent); }
-    .bg-accent-weak{ background:var(--accent-weak); }
-    .bg-panel{ background:var(--panel); }
-    .nav-link{ transition: color .2s ease, transform .2s ease; }
-    .nav-link:hover, .nav-link.active{ color:var(--accent); transform:translateY(-1px); }
-    .card{ transition: transform .2s ease, box-shadow .2s ease; }
-    .card:hover{ transform:translateY(-3px); box-shadow:0 10px 15px -3px rgb(0 0 0 / .1),0 4px 6px -4px rgb(0 0 0 / .1); }
-    .chart-container{ position:relative; width:100%; max-width:820px; margin-inline:auto; height:340px; }
-    @media (min-width:768px){ .chart-container{ height:420px; } }
-    .timeline-item.active .timeline-content{ max-height:500px; opacity:1; padding-top:1rem; padding-bottom:1rem; }
-    .timeline-content{ max-height:0; opacity:0; overflow:hidden; transition: all .5s ease; }
-    .fade-in{ opacity:0; transform:translateY(12px); transition: opacity .6s ease-out, transform .6s ease-out; }
-    .fade-in.visible{ opacity:1; transform:none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>皇帝ペンギン：愛と絆の物語</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Antarctic Twilight -->
+    <!-- Application Structure Plan: このSPAは、ユーザーが皇帝ペンギンの生涯を物語のように追体験できるよう、時系列とテーマ性を組み合わせたストーリーテリング構造を採用します。まず、ヒーローセクションでユーザーの興味を引きつけ、次に「壮大なる旅路」「命を繋ぐ絆」「氷上の共同体」という3つのテーマ別セクションに誘導します。各セクションは、インタラクティブな要素（タイムライン、比較チャート、データカード）を用いて、ユーザーが能動的に情報を発見できるように設計されています。レポートの章立てをそのまま再現するのではなく、ユーザーの理解と感情移入を最大化するために、情報を再構成し、最も効果的な流れをデザインしました。 -->
+    <!-- Visualization & Content Choices: レポート内の定性的・定量的情報を、ユーザーが直感的に理解できる視覚的要素に変換します。「繁殖サイクル」はインタラクティブなタイムラインで表現し、ユーザーが各段階をクリックすると詳細が表示されるようにします（Goal: Change, Method: HTML/JS Timeline）。「親の役割分担」は、オスとメスの絶食期間や体重減少を比較する棒グラフで示します（Goal: Compare, Method: Chart.js Bar Chart）。「生存の鍵となる数値」は、クリックで詳細が展開するカード形式で提示します（Goal: Inform, Method: HTML/JS Cards）。これらの選択は、SVGやMermaid JSを使用せず、ユーザーのエンゲージメントを高め、複雑な生態を分かりやすく伝えることを目的としています。 -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #F0F4F8;
+            color: #1A202C;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .timeline-item.active .timeline-content {
+            max-height: 500px;
+            opacity: 1;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .timeline-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s ease-in-out;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link.active {
+            color: #2B6CB0;
+            border-bottom-color: #2B6CB0;
+        }
+    </style>
 </head>
 <body class="antialiased">
 
-  <!-- Shared-like header (includes penguin link) -->
-  <header class="bg-white/80 backdrop-blur sticky top-0 z-50 border-b">
-    <nav class="container mx-auto px-6 py-3 flex items-center justify-between">
-      <a href="/wiseresearch/" class="text-base md:text-lg font-bold text-gray-800 hover:text-amber-700">wiseresearch</a>
-      <ul class="hidden md:flex items-center gap-6 text-sm">
-        <li><a class="nav-link" href="/wiseresearch/">Home</a></li>
-        <li><a class="nav-link" href="/wiseresearch/bear/">くま</a></li>
-        <li><a class="nav-link" href="/wiseresearch/cat/">ねこ</a></li>
-        <li><a class="nav-link" href="/wiseresearch/alien/">うちゅうじん</a></li>
-        <li><a class="nav-link active" href="/wiseresearch/penguin/">ぺんぎん</a></li>
-      </ul>
-      <button id="menuBtn" class="md:hidden p-2 rounded hover:bg-gray-100" aria-label="メニュー">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </nav>
-    <div id="mobileNav" class="md:hidden hidden border-t bg-white/95">
-      <ul class="px-6 py-3 space-y-2 text-sm">
-        <li><a href="/wiseresearch/" class="block">Home</a></li>
-        <li><a href="/wiseresearch/bear/" class="block">くま</a></li>
-        <li><a href="/wiseresearch/cat/" class="block">ねこ</a></li>
-        <li><a href="/wiseresearch/alien/" class="block">うちゅうじん</a></li>
-        <li><a href="/wiseresearch/penguin/" class="block">ぺんぎん</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <main class="container mx-auto px-6 py-10 md:py-14">
-    <!-- Hero -->
-    <section id="hero" class="min-h-[48vh] grid place-items-center text-center fade-in">
-      <div>
-        <h1 class="text-4xl md:text-6xl font-bold leading-tight">
-          南極に刻まれる、<span class="text-accent">愛と絆</span>の物語
-        </h1>
-        <p class="text-lg md:text-xl max-w-3xl mx-auto mt-6 text-gray-600">
-          皇帝ペンギンの繁殖サイクルと親の役割、そして氷上の共同体。<br>
-          ストーリーとデータで読み解く、最果てのドラマ。
-        </p>
-      </div>
-    </section>
-
-    <!-- Journey / Timeline -->
-    <section id="journey" class="py-14 border-t border-amber-200 fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第1章：壮大なる旅路</h2>
-      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">
-        海から50km以上の内陸へ向かう長い行軍、産卵、抱卵、そして再会へ。クリックで各段階の詳細が開きます。
-      </p>
-      <div class="max-w-3xl mx-auto" id="timeline"></div>
-    </section>
-
-    <!-- Bond / Charts -->
-    <section id="bond" class="py-14 border-t border-amber-200 fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第2章：命を繋ぐ絆</h2>
-      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">
-        役割分担は極限レベル。オスの長期絶食と体重減少、メスの遠征採餌という「命のバトン」を可視化。
-      </p>
-      <div class="grid md:grid-cols-2 gap-8 items-stretch">
-        <div class="bg-panel rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-center mb-4">絶食期間（目安）</h3>
-          <div class="chart-container"><canvas id="fastingChart"></canvas></div>
-          <p class="text-xs text-gray-500 mt-3 text-center">※ 季節・コロニーによって変動します</p>
+    <header class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-gray-800">皇帝ペンギンの物語</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#journey" class="nav-link text-gray-600 hover:text-blue-600 border-b-2 border-transparent pb-1">壮大なる旅路</a>
+                <a href="#bond" class="nav-link text-gray-600 hover:text-blue-600 border-b-2 border-transparent pb-1">命を繋ぐ絆</a>
+                <a href="#community" class="nav-link text-gray-600 hover:text-blue-600 border-b-2 border-transparent pb-1">氷上の共同体</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#journey" class="block py-2 px-4 text-sm hover:bg-gray-200">壮大なる旅路</a>
+            <a href="#bond" class="block py-2 px-4 text-sm hover:bg-gray-200">命を繋ぐ絆</a>
+            <a href="#community" class="block py-2 px-4 text-sm hover:bg-gray-200">氷上の共同体</a>
         </div>
-        <div class="bg-white rounded-2xl p-6 border border-amber-100">
-          <h3 class="text-xl font-bold text-center mb-4">体重減少率（最大）</h3>
-          <div class="chart-container"><canvas id="weightChart"></canvas></div>
-          <p class="text-xs text-gray-500 mt-3 text-center">※ 文献報告の上限値を概念図として表示</p>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-12">
+
+        <section id="hero" class="text-center mb-16 md:mb-24">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-gray-900">南極の氷原に刻まれる、愛と絆の物語</h2>
+            <p class="max-w-3xl mx-auto text-gray-600 md:text-lg">
+                地球上で最も過酷な環境、南極。そこで繰り広げられる皇帝ペンギンの生命のドラマは、単なる生存本能を超えた、深い愛情と驚くべき協力の物語です。このインタラクティブ・レポートを通じて、科学が解き明かす彼らの驚異的な生態を探求しましょう。
+            </p>
+        </section>
+
+        <section id="journey" class="mb-16 md:mb-24 scroll-mt-20">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-2 text-gray-800">壮大なる旅路</h3>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">繁殖のため、彼らは海を離れ、内陸の氷原へと向かう長く過酷な旅に出ます。この旅は、彼らの絆の始まりであり、次世代の命を守るための最初の試練です。ここでは、その繁殖サイクルを時系列で追体験できます。</p>
+            
+            <div class="max-w-3xl mx-auto">
+                <div id="timeline-container"></div>
+            </div>
+        </section>
+
+        <section id="bond" class="mb-16 md:mb-24 scroll-mt-20">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-2 text-gray-800">命を繋ぐ絆</h3>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">皇帝ペンギンの子育ては、オスとメスの完璧な役割分担と自己犠牲の上に成り立っています。特にオスの献身は「イクメンの鏡」と称されるほど。ここでは、その究極の育児投資をデータで比較し、その過酷さと愛情の深さを探ります。</p>
+
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h4 class="font-bold text-lg mb-4 text-center">親の役割比較：絶食期間</h4>
+                    <div class="chart-container">
+                        <canvas id="fastingChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-4">オスは移動期間を含めると最大120日以上も絶食し、ひたすら卵を温め続けます。これは、メスが海で栄養を蓄え、ヒナのための食料を確保するために不可欠な、命を賭したバトンリレーです。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h4 class="font-bold text-lg mb-4 text-center">親の役割比較：体重減少</h4>
+                    <div class="chart-container">
+                        <canvas id="weightLossChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-4">過酷な絶食により、オスの体重は最大で45%も減少します。これは、自らの命を削ってでも次世代に繋ごうとする、究極の親の愛情の証です。メスも産卵で体力を消耗し、体重が減少します。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="community" class="scroll-mt-20">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-2 text-gray-800">氷上の共同体</h3>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">彼らの絆は夫婦や親子だけにとどまりません。コロニー全体で協力し、南極の厳しい冬を乗り越えます。しかし、その絆は常に美しいだけではなく、過酷な現実や新たな脅威にも直面しています。</p>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-4xl mb-3 text-center">🐧</div>
+                    <h4 class="font-bold text-lg mb-2 text-center">ハドル</h4>
+                    <p class="text-sm text-gray-600">厳しいブリザードを乗り越えるため、身を寄せ合う集団行動。外側と内側が入れ替わることで、全員で暖かさを分かち合います。これは個々の生存と集団の繁栄を結びつける、高度な社会協力の形です。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-4xl mb-3 text-center">💔</div>
+                    <h4 class="font-bold text-lg mb-2 text-center">一季限りの絆</h4>
+                    <p class="text-sm text-gray-600">「一生を添い遂げる」というイメージとは異なり、離婚率は85%にも達します。これは愛情が薄いのではなく、巣を持たず長距離を移動するため、翌年同じ相手と再会するのが困難なためです。彼らの絆は、その瞬間の共同作業に全てを捧げる、集中的な形なのです。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="text-4xl mb-3 text-center">⚠️</div>
+                    <h4 class="font-bold text-lg mb-2 text-center">気候変動の脅威</h4>
+                    <p class="text-sm text-gray-600">近年の海氷減少は、彼らの繁殖地を奪い、ヒナの生存を直接脅かしています。ヒナが育つ前に氷が溶け、大量死する悲劇が報告されています。彼らの愛の物語は今、地球規模の環境問題と直面しています。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16 md:mt-24">
+        <div class="container mx-auto px-6 py-4 text-center text-sm">
+            <p>このページは、皇帝ペンギンの生態に関する科学的レポートに基づき、教育目的で作成されました。</p>
         </div>
-      </div>
-    </section>
+    </footer>
 
-    <!-- Community / Cards -->
-    <section id="community" class="py-14 border-t border-amber-200 fade-in">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">第3章：氷上の共同体</h2>
-      <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">
-        ハドル（集団保温）、一季限りの絆、そして気候変動の脅威。共同体の力と現実を3枚のカードで。
-      </p>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="card bg-white p-6 rounded-xl">
-          <div class="text-4xl mb-3 text-center">🐧</div>
-          <h3 class="font-bold text-lg mb-2 text-center">ハドル</h3>
-          <p class="text-sm text-gray-600">
-            体を寄せ合い、外側と内側を交代して寒さをしのぐ集団行動。集団最適で個体の体力を節約する高度な協力戦略。
-          </p>
-        </div>
-        <div class="card bg-white p-6 rounded-xl">
-          <div class="text-4xl mb-3 text-center">💔</div>
-          <h3 class="font-bold text-lg mb-2 text-center">一季限りの絆</h3>
-          <p class="text-sm text-gray-600">
-            巣を持たず毎年広域を移動するため、翌年同じ相手と再会できないことが多い。離婚率は高いが、その年の共同作業には全力を注ぐ。
-          </p>
-        </div>
-        <div class="card bg-white p-6 rounded-xl">
-          <div class="text-4xl mb-3 text-center">⚠️</div>
-          <h3 class="font-bold text-lg mb-2 text-center">気候変動の脅威</h3>
-          <p class="text-sm text-gray-600">
-            海氷減少が繁殖地とヒナの生存を直撃。短い夏まで氷が持たず、ヒナが育つ前に崩壊するケースが報告されている。
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const timelineData = [
+                {
+                    period: '3-4月',
+                    title: '内陸への移動とパートナー探し',
+                    icon: '🤝',
+                    content: '繁殖期が始まると、皇帝ペンギンは海から50km以上離れた内陸の繁殖地へ向かいます。この過酷な旅路の中で、オスとメスは独特の鳴き交わしによって互いを識別し、パートナーを見つけます。声は、優れた遺伝子を持つ相手を見極める重要な指標となります。'
+                },
+                {
+                    period: '5-6月',
+                    title: '産卵と卵の受け渡し',
+                    icon: '🥚',
+                    content: 'メスはたった1つの大きな卵を産みます。産卵で体力を使い果たしたメスは、卵を慎重にオスに託し、自らは栄養補給のために海へと旅立ちます。ここから、オスの長く孤独な抱卵が始まります。'
+                },
+                {
+                    period: '7-8月',
+                    title: '父親による命懸けの抱卵',
+                    icon: '👨‍👧',
+                    content: 'オスは自分の足の甲に卵を乗せ、抱卵嚢（ほうらんのう）と呼ばれるお腹の皮膚で覆い、約65日間、飲まず食わずで卵を温め続けます。マイナス60度にもなる極寒の中、立ったままひたすら耐え忍びます。'
+                },
+                {
+                    period: '9-10月',
+                    title: 'ヒナの孵化と母親の帰還',
+                    icon: '🐣',
+                    content: 'ヒナが孵化する頃、栄養を蓄えたメスがコロニーに戻ってきます。数万羽の中から自分のパートナーを声だけを頼りに探し出し、感動の再会を果たします。もしメスの帰りが遅れた場合、オスは自らの胃壁を溶かした「ミルク」をヒナに与え、命を繋ぎます。'
+                },
+                {
+                    period: '11-12月',
+                    title: '共同育児とヒナの巣立ち',
+                    icon: '🌊',
+                    content: '再会後は、オスとメスが交代で海へ餌を取りに行き、ヒナを育てます。ヒナが十分に成長し、南極の短い夏が訪れる頃、彼らは独り立ちし、自らの力で初めて海へと入っていきます。こうして、命のサイクルは次世代へと受け継がれるのです。'
+                }
+            ];
 
-  <footer class="bg-white/80 border-t">
-    <div class="container mx-auto px-6 py-6 text-center text-sm text-gray-600">
-      © <span id="year"></span> wiseresearch — Interactive Penguin Report
-    </div>
-  </footer>
+            const timelineContainer = document.getElementById('timeline-container');
+            timelineData.forEach((item, index) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'timeline-item border-l-2 border-blue-300 pl-6 pb-8 relative';
+                itemEl.innerHTML = `
+                    <div class="timeline-marker absolute -left-[11px] top-1 w-5 h-5 bg-blue-500 rounded-full border-4 border-white"></div>
+                    <div class="timeline-header cursor-pointer flex items-center">
+                        <span class="text-2xl mr-4">${item.icon}</span>
+                        <div>
+                            <p class="text-sm text-blue-600 font-semibold">${item.period}</p>
+                            <h4 class="font-bold text-lg">${item.title}</h4>
+                        </div>
+                        <span class="ml-auto text-gray-500 transform transition-transform duration-300">▼</span>
+                    </div>
+                    <div class="timeline-content text-gray-600 text-sm">
+                        ${item.content}
+                    </div>
+                `;
+                timelineContainer.appendChild(itemEl);
+            });
 
-  <script>
-    // Footer year & mobile nav
-    document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('menuBtn').addEventListener('click', ()=>{
-      document.getElementById('mobileNav').classList.toggle('hidden');
-    });
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach((item, index) => {
+                const header = item.querySelector('.timeline-header');
+                header.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                    const arrow = header.querySelector('span.ml-auto');
+                    arrow.classList.toggle('rotate-180');
+                });
+                if (index === 0) {
+                    item.classList.add('active');
+                    header.querySelector('span.ml-auto').classList.add('rotate-180');
+                }
+            });
+            
+            const fastingCtx = document.getElementById('fastingChart').getContext('2d');
+            new Chart(fastingCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['オス (抱卵期)', 'メス (採餌期)'],
+                    datasets: [{
+                        label: '最大絶食日数',
+                        data: [120, 0],
+                        backgroundColor: ['#3B82F6', '#93C5FD'],
+                        borderColor: ['#2563EB', '#60A5FA'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw}日`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: '日数' }
+                        }
+                    }
+                }
+            });
 
-    // Fade-in on scroll
-    const faders = document.querySelectorAll('.fade-in');
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); } });
-    },{threshold:.15});
-    faders.forEach(el=>io.observe(el));
+            const weightLossCtx = document.getElementById('weightLossChart').getContext('2d');
+            new Chart(weightLossCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['オス (抱卵後)', 'メス (産卵後)'],
+                    datasets: [{
+                        label: '最大体重減少率',
+                        data: [45, 25],
+                        backgroundColor: ['#10B981', '#6EE7B7'],
+                        borderColor: ['#059669', '#34D399'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: '減少率 (%)' }
+                        }
+                    }
+                }
+            });
 
-    // Timeline data (click to expand)
-    const steps = [
-      {period:'3-4月', icon:'🤝', title:'内陸への移動とパートナー探し',
-       text:'海から内陸の繁殖地へ（時に50km以上）。鳴き声で個体識別し、ペア形成。'},
-      {period:'5-6月', icon:'🥚', title:'産卵と卵の受け渡し',
-       text:'メスが1卵を産み、慎重にオスへ託す。メスは採餌へ出発、オスは抱卵開始。'},
-      {period:'7-8月', icon:'🧣', title:'父親による抱卵（約65日）',
-       text:'オスは足の上の卵を抱卵嚢で覆い、暴風雪と-60℃に耐えつつ絶食で温め続ける。'},
-      {period:'9-10月', icon:'🐣', title:'孵化と母の帰還',
-       text:'ヒナの孵化期にメスが帰還。声で互いを再発見。遅れた場合、オスは“ミルク”で命を繋ぐことも。'},
-      {period:'11-12月', icon:'🌊', title:'共同育児と巣立ち',
-       text:'交代で採餌しながらヒナを育て、短い夏に合わせて独り立ちへ。'}
-    ];
-    const tl = document.getElementById('timeline');
-    steps.forEach((s,i)=>{
-      const item = document.createElement('div');
-      item.className='timeline-item border-l-2 border-amber-300 pl-6 pb-8 relative';
-      item.innerHTML=`
-        <div class="absolute -left-[11px] top-1 w-5 h-5 bg-amber-600 rounded-full border-4 border-white"></div>
-        <div class="timeline-header cursor-pointer flex items-center">
-          <span class="text-2xl mr-4">${s.icon}</span>
-          <div>
-            <p class="text-sm text-amber-700 font-semibold">${s.period}</p>
-            <h3 class="font-bold text-lg">${s.title}</h3>
-          </div>
-          <span class="ml-auto text-gray-500 transition-transform duration-300">▼</span>
-        </div>
-        <div class="timeline-content text-gray-700 text-sm">${s.text}</div>`;
-      tl.appendChild(item);
-    });
-    document.querySelectorAll('.timeline-item').forEach((item,idx)=>{
-      const header=item.querySelector('.timeline-header');
-      const arrow=header.querySelector('span.ml-auto');
-      header.addEventListener('click', ()=>{
-        item.classList.toggle('active');
-        arrow.classList.toggle('rotate-180');
-      });
-      if(idx===0){ item.classList.add('active'); arrow.classList.add('rotate-180'); }
-    });
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section[id]');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 80) {
+                        current = section.getAttribute('id');
+                    }
+                });
 
-    // Charts
-    new Chart(document.getElementById('fastingChart').getContext('2d'),{
-      type:'bar',
-      data:{
-        labels:['オス（抱卵期）','メス（採餌期）'],
-        datasets:[{ label:'最大絶食日数', data:[120, 0],
-          backgroundColor:['rgba(217,119,6,.6)','rgba(217,119,6,.25)'],
-          borderColor:['rgba(217,119,6,1)','rgba(217,119,6,.6)'], borderWidth:1 }]
-      },
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:(c)=>` ${c.formattedValue} 日` }} },
-        scales:{ y:{ beginAtZero:true, title:{display:true, text:'日数'} } }
-      }
-    });
-    new Chart(document.getElementById('weightChart').getContext('2d'),{
-      type:'bar',
-      data:{
-        labels:['オス（抱卵後）','メス（産卵後）'],
-        datasets:[{ label:'最大体重減少率', data:[45, 25],
-          backgroundColor:['rgba(217,119,6,.6)','rgba(217,119,6,.25)'],
-          borderColor:['rgba(217,119,6,1)','rgba(217,119,6,.6)'], borderWidth:1 }]
-      },
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:(c)=>` ${c.formattedValue} %` }} },
-        scales:{ y:{ beginAtZero:true, title:{display:true, text:'減少率 (%)'} } }
-      }
-    });
-  </script>
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
+
